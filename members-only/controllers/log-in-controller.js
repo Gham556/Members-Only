@@ -1,3 +1,13 @@
+const express = require('express');
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const User = require('../models/user');
+const bcrypt = require("bcryptjs");
+
+
+const app = express();
+
 passport.use(
     new LocalStrategy((username, password, done) => {
       User.findOne({ username: username }, (err, user) => {
@@ -11,6 +21,7 @@ passport.use(
         if (user.password !== password) {
           bcrypt.compare(password, user.password, (err, res) => {
             if (res) {
+                console.log('success', user)
               // passwords match! log user in
               return done(null, user)
             } else {
@@ -23,30 +34,44 @@ passport.use(
       });
     })
   );
+
   
   passport.serializeUser(function(user, done) {
+    console.log('serilize user')
     done(null, user.id);
   });
   
   passport.deserializeUser(function(id, done) {
+    console.log('deserilize user')
     User.findById(id, function(err, user) {
       done(err, user);
     });
   });
-
-app.post(
-    "/log-in",
-    passport.authenticate("local", {
-      successRedirect: "/",
-      failureRedirect: "/",
-    })
-  );
+ 
+  app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(express.urlencoded({ extended: false }));
   
-  app.get("/log-out", (req, res, next) => {
+exports.sign_in_post = passport.authenticate("local", {
+      session: false, 
+      successRedirect: "/",
+      successMessage: true,
+      failureRedirect: "/",
+      failureMessage: false
+    });
+  
+exports.index = (req, res, next) => {
+    res.render("index", {
+        user: req.user,
+    });
+}
+
+exports.log_out_post =  (req, res, next) => {
     req.logout(function (err) {
       if (err) {
         return next(err);
       }
       res.redirect("/");
     });
-  });
+  };

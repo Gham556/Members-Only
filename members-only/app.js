@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 var logger = require('morgan');
 const session = require("express-session");
+
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
@@ -14,7 +15,6 @@ const mongoDb = process.env.SECRET_KEY;
 mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
-
 
 var indexRouter = require('./routes/index');
 
@@ -29,14 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-
-
-
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
-
 
 
 // catch 404 and forward to error handler
