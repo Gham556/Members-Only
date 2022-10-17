@@ -1,10 +1,17 @@
 var express = require('express');
 var router = express.Router();
 const session = require("express-session");
+const passport = require("passport");
+
 
 const  sign_up_controller = require("../controllers/sign-up-controller");
 const sign_in_controller = require("../controllers/log-in-controller");
 const app = require('../app');
+
+router.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+router.use(passport.initialize());
+router.use(passport.session());
+router.use(express.urlencoded({ extended: false }));
 
 /* GET sign-up page. */
 router.get('/sign-up', sign_up_controller.sign_up_get);

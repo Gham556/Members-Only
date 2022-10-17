@@ -48,13 +48,12 @@ passport.use(
     });
   });
  
-  app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(express.urlencoded({ extended: false }));
   
 exports.sign_in_post = passport.authenticate("local", {
-      session: false, 
+      session: true, 
       successRedirect: "/",
       successMessage: true,
       failureRedirect: "/",
