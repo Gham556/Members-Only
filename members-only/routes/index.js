@@ -24,7 +24,7 @@ router.get('/', sign_in_controller.index);
 /* POST sign-in */
 router.post('/log-in', sign_in_controller.sign_in_post);
 
-/* GET index */
-router.post('/log-out', sign_in_controller.log_out_post);
+/* GET log-out */
+router.get('/log-out', sign_in_controller.log_out_get);
 
 module.exports = router;

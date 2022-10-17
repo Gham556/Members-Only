@@ -66,9 +66,10 @@ exports.index = (req, res, next) => {
     });
 }
 
-exports.log_out_post =  (req, res, next) => {
+exports.log_out_get =  (req, res, next) => {
     req.logout(function (err) {
       if (err) {
+        console.log(err)
         return next(err);
       }
       res.redirect("/");
