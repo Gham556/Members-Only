@@ -57,11 +57,7 @@ exports.sign_in_post = passport.authenticate("local", {
       failureMessage: false
     });
   
-exports.index = (req, res, next) => {
-    res.render("index", {
-        user: req.user,
-    });
-}
+
 
 exports.log_out_get =  (req, res, next) => {
     req.logout(function (err) {

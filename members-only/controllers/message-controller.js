@@ -1,6 +1,19 @@
 const passport = require("passport");
 const message = require('../models/message');
 const Message = require('../models/message');
+const User = require("../models/user");
+
+exports.index = (req, res, next) => {
+    Message.find({}, ).populate('user').exec(function (err, message_list) {
+        if (err) {
+            return next(err);
+        }
+        res.render("index",{
+            user: req.user,
+            messages: message_list
+        } )
+    })
+    };
 
 
 exports.new_message_post = (req, res, next) => {
@@ -16,4 +29,17 @@ exports.new_message_post = (req, res, next) => {
         res.redirect('/');
     });
     
-}
+};
+
+exports.message_list_get = [
+    (req, res, next) => {
+        Message.find({}, "message, user").populate('user').exec(function (err, message_list) {
+            if (err) {
+                return next(err);
+            }
+            res.render(index )
+        })
+    }
+            
+        
+]

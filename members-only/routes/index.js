@@ -20,7 +20,7 @@ router.get('/sign-up', sign_up_controller.sign_up_get);
 router.post('/sign-up', sign_up_controller.sign_up_post);
 
 /* index */
-router.get('/', sign_in_controller.index);
+router.get('/', message_controller.index);
 
 /* POST sign-in */
 router.post('/log-in', sign_in_controller.sign_in_post);

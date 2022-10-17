@@ -3,12 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title></title>
+  <link  rel='stylesheet' href="../public/stylesheets/style.css" type="text/css">
 </head>
 <body>
   <% if (user) {%>
     <h1>WELCOME BACK <%= user.username %></h1>
     <a href="/log-out">LOG OUT</a>
-    <div class="messageBoard"></div>
+    <div class="messageBoard">
+      <%messages.forEach(function(message) {%>
+        <div>
+          <p><%=message.message %></p>
+          <p><%=message.user.username %></p>
+        </div>
+      <%})%> 
+    </div>
     <form action="/" method="POST">
       <input type="text" name="message">
       <button type="submit">Send</button>
