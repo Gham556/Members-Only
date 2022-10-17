@@ -6,6 +6,7 @@ const passport = require("passport");
 
 const  sign_up_controller = require("../controllers/sign-up-controller");
 const sign_in_controller = require("../controllers/log-in-controller");
+const message_controller = require("../controllers/message-controller");
 const app = require('../app');
 
 router.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
@@ -27,4 +28,6 @@ router.post('/log-in', sign_in_controller.sign_in_post);
 /* GET log-out */
 router.get('/log-out', sign_in_controller.log_out_get);
 
+/*Post Message */
+router.post('/', message_controller.new_message_post);
 module.exports = router;

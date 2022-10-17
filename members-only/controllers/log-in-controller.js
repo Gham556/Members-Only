@@ -48,9 +48,6 @@ passport.use(
     });
   });
  
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(express.urlencoded({ extended: false }));
   
 exports.sign_in_post = passport.authenticate("local", {
       session: true, 
